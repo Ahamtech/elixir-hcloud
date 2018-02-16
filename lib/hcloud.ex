@@ -1,5 +1,4 @@
 defmodule Hcloud do
-
   def servers() do
     Hcloud.Client.get("servers")
   end
@@ -79,5 +78,4 @@ defmodule Hcloud do
   def pricing() do
     Hcloud.Client.get("pricing")
   end
-
 end
