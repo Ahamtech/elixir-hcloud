@@ -1,75 +1,83 @@
-defmodule Hcloud.Client do
+defmodule Hcloud do
 
-  def get(path) do
-    conf = []
-    ctype = 'application/json'
-    body = ""
-    request( conf, :get, url("https://api.hetzner.cloud/v1/",path), [] , ctype, body)
+  def servers() do
+    Hcloud.Client.get("servers")
   end
 
-  def post(path) do
-    body =""
-    post( path, body)
+  def floating_ips() do
+    Hcloud.Client.get("floating_ips")
   end
 
-  def post(path, body) do
-    conf = []
-    ctype = 'application/json'
-    request( conf, :post, url("https://api.hetzner.cloud/v1/",path), [] , ctype, body)
+  def ssh_keys() do
+    Hcloud.Client.get("ssh_keys")
   end
 
-  def delete (path) do
-    body = ""
-    delete(path, body)
+  def ssh_keys_id(id) do
+    Hcloud.Client.get("ssh_keys/#{id}")
   end
 
-  def delete(path, body) do
-    conf = []
-    ctype = 'application/json'
-    request( conf, :delete, url("https://api.hetzner.cloud/v1/",path), [] , ctype, body)
+  def ssh_keys_id_create(data) do
+    Hcloud.Client.post("ssh_keys", data)
   end
 
-  def put(path, body) do
-    conf = []
-    ctype = 'application/json'
-    request( conf, :put, url("https://api.hetzner.cloud/v1/",path), [] , ctype, body)
+  def ssh_keys_id_udpate(data) do
+    Hcloud.Client.put("ssh_keys", data)
   end
 
-  def auth_headers() do
-    {'Authorization', 'Bearer #{String.to_charlist(Application.get_env(:hcloud,:hcloud_api))}'}
+  def ssh_keys_id_delete(id) do
+    Hcloud.Client.delete("ssh_keys/#{id}")
   end
 
-  def url(domain, path) do
-    Path.join([domain,path])
+  def server_types() do
+    Hcloud.Client.get("server_types")
   end
 
-  def request(conf, method, url, headers, ctype, body) do
-    url = String.to_charlist(url)
-    opts = conf[:httpc_otps] || []
-
-    case method do
-      :get ->
-          headers = headers ++ [ auth_headers()]
-          :httpc.request(:get, {url, headers}, opts, body_format: :binary)
-      _httpvs ->
-           headers = headers ++ [ auth_headers()]
-          :httpc.request(method, {url, headers, ctype, body}, opts, body_format: :binary)
-
-    end
-    |> normalise_response
+  def server_types(id) do
+    Hcloud.Client.get("server_types/#{id}")
   end
 
-  defp normalise_response(response) do
-    case response do
-      {:ok, {{_httpvs, 200, _status_phrase}, _headers ,body} } ->
-        {:ok, body}
-      {:ok, {{_httpvs, 202, _status_phrase}, _headers ,body} } ->
-        {:ok, body}
-      {:ok, {{_httpvs, _status, _status_phrase},_headers ,body}} ->
-        {:error, body}
-      {:error, reason}->
-        {:error, reason}
-    end
+  def locations() do
+    Hcloud.Client.get("locations")
+  end
+
+  def locations(id) do
+    Hcloud.Client.get("locations/#{id}")
+  end
+
+  def datacenters() do
+    Hcloud.Client.get("datacenters")
+  end
+
+  def datacenters(id) do
+    Hcloud.Client.get("datacenters/#{id}")
+  end
+
+  def images() do
+    Hcloud.Client.get("images")
+  end
+
+  def images(id) do
+    Hcloud.Client.get("images/#{id}")
+  end
+
+  def images_udpate(id, data) do
+    Hcloud.Client.put("images/#{id}", data)
+  end
+
+  def images_delete(id) do
+    Hcloud.Client.delete("images/#{id}")
+  end
+
+  def isos() do
+    Hcloud.Client.get("isos")
+  end
+
+  def isos(id) do
+    Hcloud.Client.get("isos/#{id}")
+  end
+
+  def pricing() do
+    Hcloud.Client.get("pricing")
   end
 
 end
