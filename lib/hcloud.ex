@@ -35,9 +35,8 @@ defmodule Hcloud.Client do
     request( conf, :put, url("https://api.hetzner.cloud/v1/",path), [] , ctype, body)
   end
 
-
   def auth_headers() do
-    {'Authorization', Application.get_env(:hcloud,:hcloud_api)}
+    {'Authorization', 'Bearer #{String.to_charlist(Application.get_env(:hcloud,:hcloud_api))}'}
   end
 
   def url(domain, path) do
