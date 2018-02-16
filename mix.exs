@@ -6,22 +6,39 @@ defmodule Hcloud.Mixfile do
       app: :hcloud,
       version: "0.1.0",
       elixir: "~> 1.5",
-      start_permanent: Mix.env() == :prod,
-      deps: deps()
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      description: description(),
+      package: package(),
+      deps: deps(),
+      name: "Hcloud",
+      source_url: "https://gitlab.com/ahamtech/elixir/hcloud"
     ]
   end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [
-      extra_applications: [:logger]
-    ]
+    [ ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:httpoison, "~> 1.0"}
+    ]
+  end
+
+  defp description() do
+    "Hcloud API"
+  end
+
+  defp package() do
+    [
+      name: "hcloud",
+      files: ["lib", "mix.exs", "README*","LICENSE*"],
+      maintainers: ["Anwesh Reddy","Mahesh Reddy"],
+      licenses: ["GNU Lesser General Public License v3.0"],
+      links: %{"GitHub" => "https://gitlab.com/ahamtech/elixir/hcloud"}
     ]
   end
 end
