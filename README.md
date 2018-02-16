@@ -24,7 +24,7 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and docs can be found at [https://hexdocs.pm/hcloud](https://hexdocs.pm/hcloud).
 
 ## License
-Hcloud is Copyright © 2016 Ahamtech. It is free software, and may be redistributed under the terms specified in the LICENSE file.
+Hcloud is Copyright © 2018 Ahamtech. It is free software, and may be redistributed under the terms specified in the LICENSE file.
 
 ## About Ahamtech
 
