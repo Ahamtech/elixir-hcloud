@@ -37,7 +37,7 @@ defmodule Hcloud.Client do
 
 
   def auth_headers() do
-    {'Authorization', "Bearer: #{String.to_charlist(Application.get_env(:hcloud,:hcloud_api))}" }
+    {'Authorization', "Bearer: #{Application.get_env(:hcloud,:hcloud_api)}" }
   end
 
   def url(domain, path) do
