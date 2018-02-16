@@ -4,7 +4,7 @@ defmodule Hcloud.Mixfile do
   def project do
     [
       app: :hcloud,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.5",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -24,12 +24,13 @@ defmodule Hcloud.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.0"}
+      {:httpoison, "~> 1.0"},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
   defp description() do
-    "Hcloud API"
+    "hcloud: A Elixir library for the Hetzner Cloud API"
   end
 
   defp package() do
