@@ -1,6 +1,6 @@
-# Hcloud
+# Hcloud - A Elixir library for the Hetzner Cloud API
 
-hcloud: A Elixir library for the Hetzner Cloud API
+![hcloud](https://sos-ch-dk-2.exo.io/aham-web/elixir/hcloud.jpg)
 
 ## Installation
 
@@ -37,6 +37,8 @@ and docs can be found at [https://hexdocs.pm/hcloud](https://hexdocs.pm/hcloud).
 Hcloud is Copyright © Ahamtech. It is free software, and may be redistributed under the terms specified in the LICENSE file.
 
 ## About Ahamtech
+
+![img](https://sos-ch-dk-2.exo.io/aham-web/company/ahamtech.png)
 
 > Hcloud is maintained by Ahamtech. 
 

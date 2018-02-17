@@ -1,81 +1,122 @@
 defmodule Hcloud do
-  def servers() do
-    Hcloud.Client.get("servers")
+
+  alias Hcloud.Client
+
+  #Actions 
+  def get_actions() do 
+    Client.get("actions") 
   end
 
-  def floating_ips() do
-    Hcloud.Client.get("floating_ips")
+  def get_action(id), do: Client.get("actions/" <> id)
+
+  #Servers
+  def get_servers, do: Client.get("servers")
+  def get_server(id), do: Client.get("servers/" <> id)
+  def create_server(data), do: Client.post("servers", data)
+  def update_server_name(id, name \\ nil), do: Client.put("servers/" <> id, %{name: name})
+  def delte_server(id), do: Client.delete("servers/" <> id )
+  def server_metrics(id, metrics) do 
+    Client.get("servers/" <> id, metrics)
   end
 
-  def ssh_keys() do
-    Hcloud.Client.get("ssh_keys")
+  # Server Actions 
+
+
+  def server_actions(server_id, options \\ nil) do
+    Client.get("servers/" <> id <> "/actions", options)
   end
 
-  def ssh_keys_id(id) do
-    Hcloud.Client.get("ssh_keys/#{id}")
+  def server_action(server_id, action_id) do
+    Client.get("servers/" <> server_id <> "/actions/" <> action_id)
   end
 
-  def ssh_keys_id_create(%{name: _, primary_key: _,} = data) do
-    Hcloud.Client.post("ssh_keys", data)
+  @doc """ 
+  Here action is the any atom in the following atom 
+  """
+
+  def server_do_action(id, action) do
+    Client.post("servers/" <> id <> "/actions/" <> to_string(action))
   end
 
-  def ssh_keys_id_udpate(data) do
-    Hcloud.Client.put("ssh_keys", data)
+  #Floating IPs
+  def floating_ips(), do: Client.get("floating_ips")
+  def floating_ip(id), do: Client.get("floating_ips/" <> id)
+  @doc """
+  Creates a new Floating IP assigned to a server. If you want to create a Floating IP that is not bound to a server, you need to provide the home_location key instead of server. This can be either the ID or the name of the location this IP shall be created in. Note that a Floating IP can be assigned to a server in any location later on. For optimal routing it is advised to use the Floating IP in the same Location it was created in.
+
+  ## Request
+  The type argument is required while home_location and server are mutually exclusive.
+
+  You need to pass the  map as 
+    %{
+      type: type, 
+      home_location: home_location,
+      server: server
+      description: description
+     }
+
+
+  """
+  def create_floating_ip( %{type: _ } = data), do: Client.get("floating_ips")
+  def update_floating_ip_description(id, description \\ nil) do
+    Client.put("floating_ips/" <> id, description)
+  end
+  def delete_floating_ip(id), do: Client.delete("floating_ips/" <> id)
+
+  #FLoating IP Actions
+
+  def floating_ip_actions(id, data \\ nil), do: Client.get("floating_ips/" <> id <> "/actions" <> data)
+  def floating_ip_action(floating_ip_id, action_id), do: Client.get("floating_ips/" <> id <> "/actions" <> action_id)
+  def floating_ip_do_action(id,action), do: Client.post("floating_ips/" <> id <> "/actions/" <> to_string(action)) 
+
+
+
+
+
+  #ssh-keys
+  def ssh_keys(), do: Client.get("ssh_keys")
+
+  def ssh_key(id), do: Client.get("ssh_keys/#{id}")
+
+  def create_ssh_key(name, primary_key) do
+    Client.post("ssh_keys", %{name: name, primary_key: primary_key})
   end
 
-  def ssh_keys_id_delete(id) do
-    Hcloud.Client.delete("ssh_keys/#{id}")
+  def update_ssh_key(id, new_name) do
+    Client.put("ssh_keys/#{id}", %{name: new_name})
   end
 
-  def server_types() do
-    Hcloud.Client.get("server_types")
+  def delete_ssh_key(id), do: Client.delete("ssh_keys/#{id}")
+
+  #server types
+  def server_types(), do: Client.get("server_types")
+
+  def server_types(id), do: Client.get("server_types/#{id}")
+
+  #locations
+  def locations(), do: Client.get("locations")
+
+  def locations(id), do: Client.get("locations/#{id}")
+
+  #datacenters
+  def data_centers(), do: Client.get("datacenters")
+
+  def data_centers(id), do: Client.get("datacenters/#{id}")
+
+  #images
+  def images(), do: Client.get("images")
+
+  def images(id), do: Client.get("images/#{id}")
+
+  def udpate_image(id, description, type) do
+    Client.put("images/#{id}", %{description: description, type: type })
   end
 
-  def server_types(id) do
-    Hcloud.Client.get("server_types/#{id}")
-  end
+  def delete_image(id), do: Client.delete("images/#{id}")
 
-  def locations() do
-    Hcloud.Client.get("locations")
-  end
+  def isos(), do: Client.get("isos")
 
-  def locations(id) do
-    Hcloud.Client.get("locations/#{id}")
-  end
+  def isos(id), do: Client.get("isos/#{id}")
 
-  def datacenters() do
-    Hcloud.Client.get("datacenters")
-  end
-
-  def datacenters(id) do
-    Hcloud.Client.get("datacenters/#{id}")
-  end
-
-  def images() do
-    Hcloud.Client.get("images")
-  end
-
-  def images(id) do
-    Hcloud.Client.get("images/#{id}")
-  end
-
-  def images_udpate(id, data) do
-    Hcloud.Client.put("images/#{id}", data)
-  end
-
-  def images_delete(id) do
-    Hcloud.Client.delete("images/#{id}")
-  end
-
-  def isos() do
-    Hcloud.Client.get("isos")
-  end
-
-  def isos(id) do
-    Hcloud.Client.get("isos/#{id}")
-  end
-
-  def pricing() do
-    Hcloud.Client.get("pricing")
-  end
+  def pricing(), do: Client.get("pricing")
 end
