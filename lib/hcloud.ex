@@ -9,8 +9,15 @@ defmodule Hcloud do
 
   def actions(id), do: Client.get("actions/" <> id)
 
-
-  def servers(), do: Client.get("servers")
+  #Servers
+  def servers, do: Client.get("servers")
+  def servers(id), do: Client.get("servers/" <> id)
+  def create_server(data), do: Client.post("servers", data)
+  def update_server_name(id, name \\ nil), do: Client.put("servers/" <> id, %{name: name})
+  def delte_server(id), do: Client.delete("servers/" <> id )
+  def server_metrics(id, metrics) do 
+    Client.get("servers/" <> id, metrics)
+  end
 
   #Floating IPs
   def floating_ips(), do: Client.get("floating_ips")
