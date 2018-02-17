@@ -40,4 +40,5 @@ Hcloud is Copyright © Ahamtech. It is free software, and may be redistributed u
 
 > Hcloud is maintained by Ahamtech. 
 
+![img](https://sos-ch-dk-2.exo.io/aham-web/company/ahamtech.png)
 We love open source software, Erlang, Elixir, and Phoenix. See our other opensource projects, or hire our Elixir Phoenix development team to design, develop, and grow your product.
