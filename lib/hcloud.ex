@@ -3,15 +3,15 @@ defmodule Hcloud do
   alias Hcloud.Client
 
   #Actions 
-  def actions() do 
+  def get_actions() do 
     Client.get("actions") 
   end
 
-  def actions(id), do: Client.get("actions/" <> id)
+  def get_action(id), do: Client.get("actions/" <> id)
 
   #Servers
-  def servers, do: Client.get("servers")
-  def servers(id), do: Client.get("servers/" <> id)
+  def get_servers, do: Client.get("servers")
+  def get_server(id), do: Client.get("servers/" <> id)
   def create_server(data), do: Client.post("servers", data)
   def update_server_name(id, name \\ nil), do: Client.put("servers/" <> id, %{name: name})
   def delte_server(id), do: Client.delete("servers/" <> id )
@@ -26,26 +26,21 @@ defmodule Hcloud do
     Client.get("servers/" <> id <> "/actions", options)
   end
 
-  def server_specific_action(server_id, action_id) do
+  def server_action(server_id, action_id) do
     Client.get("servers/" <> server_id <> "/actions/" <> action_id)
   end
 
   @doc """ 
   Here action is the any atom in the following atom 
   """
-  def server_action(id, action) do
-    Client.post("servers/" <> id <> "/actions/" <> action)
+
+  def server_do_action(id, action) do
+    Client.post("servers/" <> id <> "/actions/" <> to_string(action))
   end
-
-
-
-  def start_server(id), do: Client.post("servers/" <> id <> "/actions/poweron" )
-  def power_on_server(id), do: start_server(id)
-
 
   #Floating IPs
   def floating_ips(), do: Client.get("floating_ips")
-  def floating_ips(id), do: Client.get("floating_ips/" <> id)
+  def floating_ip(id), do: Client.get("floating_ips/" <> id)
   @doc """
   Creates a new Floating IP assigned to a server. If you want to create a Floating IP that is not bound to a server, you need to provide the home_location key instead of server. This can be either the ID or the name of the location this IP shall be created in. Note that a Floating IP can be assigned to a server in any location later on. For optimal routing it is advised to use the Floating IP in the same Location it was created in.
 
@@ -67,6 +62,15 @@ defmodule Hcloud do
     Client.put("floating_ips/" <> id, description)
   end
   def delete_floating_ip(id), do: Client.delete("floating_ips/" <> id)
+
+  #FLoating IP Actions
+
+  def floating_ip_actions(id, data \\ nil), do: Client.get("floating_ips/" <> id <> "/actions" <> data)
+  def floating_ip_action(floating_ip_id, action_id), do: Client.get("floating_ips/" <> id <> "/actions" <> action_id)
+  def floating_ip_do_action(id,action), do: Client.post("floating_ips/" <> id <> "/actions/" <> to_string(action)) 
+
+
+
 
 
   #ssh-keys
