@@ -53,7 +53,7 @@ defmodule Hcloud.Client do
 
       _httpvs ->
         headers = headers ++ [auth_headers()]
-        :httpc.request(method, {url, headers, ctype, body}, opts, body_format: :binary)
+        :httpc.request(method, {url, headers, ctype, Poison.decode!(body)}, opts, body_format: :binary)
     end
     |> normalise_response
   end
@@ -61,13 +61,10 @@ defmodule Hcloud.Client do
   defp normalise_response(response) do
     case response do
       {:ok, {{_httpvs, 200, _status_phrase}, _headers, body}} ->
-        {:ok, body}
+        {:ok, Poison.decode!(body)}
 
-      {:ok, {{_httpvs, 202, _status_phrase}, _headers, body}} ->
-        {:ok, body}
-
-      {:ok, {{_httpvs, _status, _status_phrase}, _headers, body}} ->
-        {:error, body}
+      {:ok, {{_httpvs, 201, _status_phrase}, _headers, body}} ->
+        {:ok, Poison.decode!(body)}
 
       {:error, reason} ->
         {:error, reason}
