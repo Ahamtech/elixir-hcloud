@@ -2,6 +2,9 @@
 
 hcloud: A Elixir library for the Hetzner Cloud API
 
+
+![hcloud](https://sos-ch-dk-2.exo.io/aham-web/elixir/hcloud.jpg)
+
 ## Installation
 
 ```elixir
