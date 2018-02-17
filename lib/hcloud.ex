@@ -15,7 +15,7 @@ defmodule Hcloud do
     Hcloud.Client.get("ssh_keys/#{id}")
   end
 
-  def ssh_keys_id_create(data) do
+  def ssh_keys_id_create(%{name: _, primary_key: _,} = data) do
     Hcloud.Client.post("ssh_keys", data)
   end
 
