@@ -19,6 +19,30 @@ defmodule Hcloud do
     Client.get("servers/" <> id, metrics)
   end
 
+  # Server Actions 
+
+
+  def server_actions(server_id, options \\ nil) do
+    Client.get("servers/" <> id <> "/actions", options)
+  end
+
+  def server_specific_action(server_id, action_id) do
+    Client.get("servers/" <> server_id <> "/actions/" <> action_id)
+  end
+
+  @doc """ 
+  Here action is the any atom in the following atom 
+  """
+  def server_action(id, action) do
+    Client.post("servers/" <> id <> "/actions/" <> action)
+  end
+
+
+
+  def start_server(id), do: Client.post("servers/" <> id <> "/actions/poweron" )
+  def power_on_server(id), do: start_server(id)
+
+
   #Floating IPs
   def floating_ips(), do: Client.get("floating_ips")
   def floating_ips(id), do: Client.get("floating_ips/" <> id)
