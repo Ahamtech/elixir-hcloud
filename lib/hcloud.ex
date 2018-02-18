@@ -2,9 +2,9 @@ defmodule Hcloud do
 
   alias Hcloud.Client
 
-  #Actions 
-  def get_actions() do 
-    Client.get("actions") 
+  #Actions
+  def get_actions() do
+    Client.get("actions")
   end
 
   def get_action(id), do: Client.get("actions/" <> id)
@@ -15,23 +15,23 @@ defmodule Hcloud do
   def create_server(data), do: Client.post("servers", data)
   def update_server_name(id, name \\ nil), do: Client.put("servers/" <> id, %{name: name})
   def delte_server(id), do: Client.delete("servers/" <> id )
-  def server_metrics(id, metrics) do 
-    Client.get("servers/" <> id, metrics)
+  def server_metrics(id) do
+    Client.get("servers/" <> id)
   end
 
-  # Server Actions 
+  # Server Actions
 
 
-  def server_actions(id, options \\ nil) do
-    Client.get("servers/" <> id <> "/actions", options)
+  def server_actions(id) do
+    Client.get("servers/" <> id <> "/actions")
   end
 
   def server_action(server_id, action_id) do
     Client.get("servers/" <> server_id <> "/actions/" <> action_id)
   end
 
-  @doc """ 
-  Here action is the any atom in the following atom 
+  @doc """
+  Here action is the any atom in the following atom
   """
 
   def server_do_action(id, action) do
@@ -47,9 +47,9 @@ defmodule Hcloud do
   ## Request
   The type argument is required while home_location and server are mutually exclusive.
 
-  You need to pass the  map as 
+  You need to pass the  map as
     %{
-      type: type, 
+      type: type,
       home_location: home_location,
       server: server
       description: description
@@ -57,7 +57,7 @@ defmodule Hcloud do
 
 
   """
-  def create_floating_ip( %{type: _ } = data), do: Client.get("floating_ips", data)
+  def create_floating_ip( %{type: _ } = data), do: Client.post("floating_ips", data)
   def update_floating_ip_description(id, description \\ nil) do
     Client.put("floating_ips/" <> id, description)
   end
@@ -67,7 +67,7 @@ defmodule Hcloud do
 
   def floating_ip_actions(id, data \\ nil), do: Client.get("floating_ips/" <> id <> "/actions" <> data)
   def floating_ip_action(floating_ip_id, action_id), do: Client.get("floating_ips/" <> floating_ip_id <> "/actions" <> action_id)
-  def floating_ip_do_action(id,action), do: Client.post("floating_ips/" <> id <> "/actions/" <> to_string(action)) 
+  def floating_ip_do_action(id,action), do: Client.post("floating_ips/" <> id <> "/actions/" <> to_string(action))
 
 
 
