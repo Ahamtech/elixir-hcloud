@@ -22,7 +22,7 @@ defmodule Hcloud do
   # Server Actions 
 
 
-  def server_actions(server_id, options \\ nil) do
+  def server_actions(id, options \\ nil) do
     Client.get("servers/" <> id <> "/actions", options)
   end
 
@@ -57,7 +57,7 @@ defmodule Hcloud do
 
 
   """
-  def create_floating_ip( %{type: _ } = data), do: Client.get("floating_ips")
+  def create_floating_ip( %{type: _ } = data), do: Client.get("floating_ips", data)
   def update_floating_ip_description(id, description \\ nil) do
     Client.put("floating_ips/" <> id, description)
   end
@@ -66,7 +66,7 @@ defmodule Hcloud do
   #FLoating IP Actions
 
   def floating_ip_actions(id, data \\ nil), do: Client.get("floating_ips/" <> id <> "/actions" <> data)
-  def floating_ip_action(floating_ip_id, action_id), do: Client.get("floating_ips/" <> id <> "/actions" <> action_id)
+  def floating_ip_action(floating_ip_id, action_id), do: Client.get("floating_ips/" <> floating_ip_id <> "/actions" <> action_id)
   def floating_ip_do_action(id,action), do: Client.post("floating_ips/" <> id <> "/actions/" <> to_string(action)) 
 
 
